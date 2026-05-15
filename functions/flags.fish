@@ -8,20 +8,19 @@ function flags --description "Get flags from 'complete', paired by description"
     while true
         set parts (string split \t -- $sorted[$i])
 
-        if test "$parts[2]" != "$desc"
+        if not set -q parts[1]; or test "$parts[2]" != "$desc"
             set desc "$parts[2]"
             set -a shorts (string join \t -- $short)
             set -a longs (string join \t -- $long)
             set -e short; set -e long
         end
+        set -q parts[1]; or break
 
         switch $parts[1]
             case '--*'
                 set -a long (string sub -s3 -- $parts[1])
             case '-*'
                 set -a short (string sub -s2 -- $parts[1])
-            case ''
-                break
         end
 
         set i (math $i + 1)
