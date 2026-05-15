@@ -12,11 +12,9 @@
 #
 #     fish sak_dev.fish unlink
 
-
 switch $argv[1]
     case "link"
-        set -l self (status filename | path resolve | path dirname)
-        ln -s ~/.config/fish/conf.d/sak_dev.fish
+        ln -s (status filename | path resolve) ~/.config/fish/conf.d/sak_dev.fish
         return
     case "unlink"
         rm ~/.config/fish/conf.d/sak_dev.fish
@@ -26,7 +24,7 @@ end
 set -q __sak_loaded; and return
 set -g __sak_loaded 1
 
-set __sak_root (path resolve (status filename)/..)
+set __sak_root (status filename | path resolve | path dirname)
 
 set -p fish_function_path $__sak_root/functions
 set -p fish_complete_path $__sak_root/completions

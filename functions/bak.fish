@@ -1,6 +1,6 @@
 function __bak_unbak
     argparse --strict-longopts /dry-run \
-        /mode= f/force c/copy e/extension=? o/original -- $argv
+        /mode= f/force c/copy e/extension= -- $argv
     or return
 
     set mode $_flag_mode
@@ -18,8 +18,8 @@ function __bak_unbak
     set cmd mv
     set -q _flag_copy; and set cmd cp -R
 
-    set eval eval
-    set -q _flag_dry_run; and set eval echo
+    set run eval
+    set -q _flag_dry_run; and set run echo
 
     for path in $argv
         if not set -q drop_ext
@@ -43,11 +43,11 @@ function __bak_unbak
 
         if path filter -q $dst; and not set -q _flag_force
             echo >&2 "$mode: refusing to overwrite $dst (-f to force)"
-            return 1
+            continue
         end
 
-        rm -rf $dst
-        $cmd $src $dst
+        $run rm -rf $dst
+        $run $cmd $src $dst
     end
 end
 

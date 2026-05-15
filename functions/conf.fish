@@ -13,7 +13,7 @@ function conf
     end
 
     set config_file $HOME/.config/$argv[1]
-    set parent_dir (dirname $config_file)
+    set parent_dir (path dirname $config_file)
 
     set temp_file (mktemp --suffix=(path extension $config_file))
     set original $config_file
@@ -28,10 +28,7 @@ function conf
         return 0
     end
 
-    if not test -d $parent_dir
-        mkdir -p $parent_dir
-    end
-
+    mkdir -p $parent_dir
     cp $temp_file $config_file
     rm $temp_file
 
