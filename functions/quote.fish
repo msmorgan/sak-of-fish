@@ -1,12 +1,14 @@
 function quote
-    argparse --strict-longopts \
-        "d/delimiter=&" \
-        -- $argv
+    argparse -S 'd/delimiter=&' -- $argv
     or return
 
-    set -l delimiter \"
-    set -ql _flag_delimiter
-    and set -l delimiter $_flag_delimiter
+    set -l delimiter $_flag_delimiter \"
+    set cmd string replace -ar '^|$' $delimiter[1] -- $argv
 
-    string replace -ar '^|$' $delimiter[1] -- $argv
+    if isatty stdin
+        $cmd
+    else
+        cat | $cmd
+    end
 end
+
