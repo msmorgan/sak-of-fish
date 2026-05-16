@@ -28,4 +28,4 @@ set __sak_root (status filename | path resolve | path dirname)
 
 set -p fish_function_path $__sak_root/functions
 set -p fish_complete_path $__sak_root/completions
-
+source $__sak_root/conf.d/*.fish
