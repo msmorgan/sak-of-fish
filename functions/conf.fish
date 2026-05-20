@@ -20,7 +20,11 @@ function conf
     test -f $original; or set original /dev/null
     cp $original $temp_file
 
-    $EDITOR $temp_file
+    if not $EDITOR $temp_file
+        echo >&2 "Editing failed or was cancelled."
+        rm $temp_file
+        return 1
+    end
 
     if cmp -s $temp_file $original
         echo >&2 "No changes."
