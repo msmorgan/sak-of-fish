@@ -29,6 +29,6 @@ function filter
         end
     end
 
-    string collect -- $outputs
+    yield $outputs
 end
 

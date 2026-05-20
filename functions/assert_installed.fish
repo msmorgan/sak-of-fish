@@ -10,7 +10,7 @@ function assert_installed
     end
 
     if set -q errors[1]
-        string collect >&2 -- $errors
+        yield >&2 $errors
         return 1
     end
 end

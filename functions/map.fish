@@ -31,6 +31,6 @@ function map
         set -a outputs $output
     end
 
-    string collect -- $outputs
+    yield $outputs
 end
 

@@ -32,5 +32,5 @@ function gh_repos
         set -a repos (echo $body | jq -r (string join '|' $jq_filters))
     end
 
-    string collect -- $repos
+    yield $repos
 end
