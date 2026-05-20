@@ -8,3 +8,5 @@ abbr -a grbc 'git rebase --continue'
 abbr -a grba 'git rebase --abort'
 abbr -a grb-auto 'git rebase --interactive --autosquash --autostash --root'
 
+abbr -a gab 'git absorb'
+abbr -a gabrb 'git absorb --and-rebase'
