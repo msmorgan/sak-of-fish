@@ -25,7 +25,7 @@ function seq
     end
     if test $increment -eq 0
         echo >&2 "$(status function): increment cannot be 0"
-        return 1
+        return 2
     end
 
     set cmp -le

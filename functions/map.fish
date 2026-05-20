@@ -6,7 +6,7 @@ function map
         set sep (contains -i -- '--' $argv)
         or begin
             echo >&2 (status function): 'Missing -- separator'
-            return 1
+            return 2
         end
 
         set cmd $argv[..(math $sep - 1)]

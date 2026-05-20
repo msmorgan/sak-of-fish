@@ -6,7 +6,7 @@ function findup --description 'Traverse parent directories to find a path.'
     if string match -qr '^/' $needle
         if set -q _flag_relative
             echo >&2 (status function): "absolute path incompatible with --relative"
-            return 1
+            return 2
         end
 
         if set -q _flag_parent

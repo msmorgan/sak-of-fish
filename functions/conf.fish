@@ -5,7 +5,7 @@ function conf
     end
 
     argparse --strict-longopts -N1 -X1 'r/reload' -- $argv
-    or return 1
+    or return
 
     if string match -qr '^/' (path normalize $argv[1])
         echo >&2 "Config path must be relative to ~/.config"
