@@ -1,8 +1,30 @@
+function __gh_repos_spec
+    yield \
+        'f/forks'\t'Include forked repos' \
+        'p/predicate='\t'jq predicate filter (e.g. .stargazers_count > 10)' \
+        'o/output='\t'jq output expression (default: .full_name)'
+end
+
+complete -c gh_repos -f
+argspec complete gh_repos (__gh_repos_spec)
+
 function gh_repos
-    assert_installed -f (status function) -- gh jq
+    set spec (__gh_repos_spec)
+
+    argparse -S (argspec parse $spec) -- $argv
     or return
 
-    argparse -S -N1 -X1 f/forks p/predicate= o/output= -- $argv
+    if set -q _flag_help
+        argspec help (status function) $spec
+        return 0
+    end
+
+    if test (count $argv) -ne 1
+        echo >&2 (status function): "expected 1 argument; got "(count $argv)
+        return 2
+    end
+
+    assert_installed -f (status function) -- gh jq
     or return
 
     set jq_filters '.[]'
@@ -11,7 +33,7 @@ function gh_repos
     or set -a jq_filters 'select(.fork | not)'
 
     set -q _flag_predicate
-    and set -a jq_filters $_flag_predicate[1]
+    and set -a jq_filters "select($_flag_predicate[1])"
 
     if set -q _flag_output
         set -a jq_filters $_flag_output
